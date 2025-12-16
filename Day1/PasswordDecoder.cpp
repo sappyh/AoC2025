@@ -41,12 +41,30 @@ int PassWordDecoder::getNextRotation()
     {
         return RIGHT * steps;
     }
+    else
+    {
+        throw std::runtime_error("Invalid Direction Character");
+    }
 }
 
 void PassWordDecoder::updatePosition(int rotationStep)
 {
+    if( abs(rotationStep) > MAX_POS)
+    {
+        mZeroCount+= abs(rotationStep) / MAX_POS;
+    }
+
+    int previousPosition = mPosition;
+
     mPosition = ((mPosition + rotationStep) % MAX_POS + MAX_POS) % MAX_POS;
     if (mPosition == 0)
+    {
+        mZeroCount++;
+    }
+
+    /** Check if there a zero crossing during rotation */
+    if ((mPosition > previousPosition && rotationStep < 0 && previousPosition != 0) ||
+        (mPosition < previousPosition && rotationStep > 0 && mPosition != 0))
     {
         mZeroCount++;
     }
