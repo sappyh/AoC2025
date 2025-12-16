@@ -1,0 +1,2 @@
+/usr/bin/ar qc libPasswordDecoder.a CMakeFiles/PasswordDecoder.dir/PasswordDecoder.cpp.o
+/usr/bin/ranlib libPasswordDecoder.a

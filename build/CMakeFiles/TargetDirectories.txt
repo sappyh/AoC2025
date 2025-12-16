@@ -1,0 +1,6 @@
+/workspaces/AoC2025/build/CMakeFiles/edit_cache.dir
+/workspaces/AoC2025/build/CMakeFiles/rebuild_cache.dir
+/workspaces/AoC2025/build/Day1/CMakeFiles/PasswordDecoder.dir
+/workspaces/AoC2025/build/Day1/CMakeFiles/test.dir
+/workspaces/AoC2025/build/Day1/CMakeFiles/edit_cache.dir
+/workspaces/AoC2025/build/Day1/CMakeFiles/rebuild_cache.dir
