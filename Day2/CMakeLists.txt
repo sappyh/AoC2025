@@ -1,0 +1,4 @@
+add_library(InvalidDetector InvalidDetector.cpp)
+
+add_executable(InvalidTest InvalidTest.cpp)
+target_link_libraries(InvalidTest InvalidDetector)
