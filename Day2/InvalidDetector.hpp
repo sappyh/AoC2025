@@ -18,5 +18,6 @@ public:
     
     std::pair<uint64_t, uint64_t> parseRange(const std::string& line);
     std::vector<uint64_t> getInvalidValues(uint64_t rangeStart, uint64_t rangeEnd);
+    std::vector<uint64_t> getInvalidValuesN(uint64_t rangeStart, uint64_t rangeEnd);
 };
 

@@ -17,7 +17,7 @@ uint64_t InvalidDetector::calculateInvalidSum()
         getline(mDataFile, currentEntry, ',');
         auto [rangeStart, rangeEnd] = parseRange(currentEntry);
 
-        auto invalidValues = getInvalidValues(rangeStart, rangeEnd);
+        auto invalidValues = getInvalidValuesN(rangeStart, rangeEnd);
         for (const auto& val : invalidValues)
         {
             mInvalidSum += static_cast<uint64_t>(val);
@@ -41,10 +41,8 @@ std::pair<uint64_t, uint64_t> InvalidDetector::parseRange(const std::string& ent
         uint64_t start = static_cast<uint64_t>(std::stoll(entry.substr(0, dashPos)));
         uint64_t end = static_cast<uint64_t>(std::stoll(entry.substr(dashPos + 1)));
         return std::make_pair(start, end);
-    } catch (const std::invalid_argument&) {
-        throw std::runtime_error(std::string("Invalid number in range: '") + entry + "'");
-    } catch (const std::out_of_range&) {
-        throw std::runtime_error(std::string("Number out of range in: '") + entry + "'");
+    } catch (std::exception& e) {
+        throw std::runtime_error(std::string("Error Parsing Range: '") + entry + "' - " + e.what());
     }
 }
 
@@ -72,6 +70,47 @@ std::vector<uint64_t> InvalidDetector::getInvalidValues(uint64_t rangeStart, uin
             }
         }
         i++;
+    }
+    return invalidValues;
+}
+
+std::vector<uint64_t> InvalidDetector::getInvalidValuesN(uint64_t rangeStart, uint64_t rangeEnd)
+{
+    std::vector<uint64_t> invalidValues;
+    for (uint64_t i = rangeStart; i <= rangeEnd; i++)
+    {
+        /** This is a pattern matching problem hence convert the int to string */
+        std::string numStr = std::to_string(i);
+
+        /** Since all prefix substrings must start at 0 */
+        int substringLeftIndex = 0;
+        for (int subStringRightIndex = substringLeftIndex + 1; subStringRightIndex < numStr.length(); subStringRightIndex++)
+        {
+                int lengthOfSubString = subStringRightIndex - substringLeftIndex;
+                /** Extract the substring */
+                std::string subStringtoMatch = numStr.substr(substringLeftIndex, lengthOfSubString);
+
+                /** Check if the string is composed of this substring repeated */
+                std::string remainingStr = numStr.substr(subStringRightIndex);
+
+                while(remainingStr.length() >= subStringtoMatch.length())
+                {
+                    std::string nextSubString = remainingStr.substr(0, lengthOfSubString);
+                    if (nextSubString != subStringtoMatch)
+                    {
+                        break;
+                    }
+                    remainingStr = remainingStr.substr(lengthOfSubString);
+                }
+
+                if (remainingStr.empty())
+                {   
+                    invalidValues.push_back(i);                
+                    break;  
+                }
+                
+        }
+
     }
     return invalidValues;
 }
