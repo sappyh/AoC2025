@@ -1,0 +1,4 @@
+add_library(JoltageCalculator JoltageCalculator.cpp)
+
+add_executable(JoltageTest JoltageTest.cpp)
+target_link_libraries(JoltageTest JoltageCalculator)
