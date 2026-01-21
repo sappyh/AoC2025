@@ -35,7 +35,5 @@ uint64_t JoltageCalculator::calculateOutputJoltage(const std::string& joltageStr
         remainningString = remainningString.substr(largestDigitIndex+1);
         maxNumber = maxNumber * 10 + static_cast<uint64_t>(largestDigit - '0');
     }
-
-    std::cout << "Largest: " << maxNumber << std::endl;
     return maxNumber;
 }

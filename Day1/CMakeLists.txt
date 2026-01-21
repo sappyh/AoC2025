@@ -1,4 +1,0 @@
-add_library(PasswordDecoder PasswordDecoder.cpp)
-
-add_executable(PasswordTest PasswordTest.cpp)
-target_link_libraries(PasswordTest PasswordDecoder)
